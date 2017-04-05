@@ -253,8 +253,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
 
             // 4. Show the dialog
-            dialog.show();
-
+            dialog.show();// show error
             return;
 
         }

@@ -1,1 +1,1 @@
-include ':app', ':sspcoms'
+include ':app'

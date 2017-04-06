@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     static TextView txtDevice;
     static TextView txtDataset;
     static TextView txtSerial;
+    static TextView txtConnect;
+    static ProgressBar prgConnect;
 
 
     static ProgressDialog progress;
@@ -127,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
         txtSerial = (TextView) findViewById(R.id.txtSerialNumber);
         txtSerial.setText(getResources().getString(R.string.serial_number_title));
 
+        prgConnect = (ProgressBar)findViewById(R.id.progressBarConnect);
+        txtConnect = (TextView)findViewById(R.id.txtConnection);
+
 
         try {
             ftD2xx = D2xxManager.getInstance(this);
@@ -148,6 +153,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 openDevice();
                 if (ftDev != null) {
+                    prgConnect.setVisibility(View.VISIBLE);
+                    txtConnect.setVisibility(View.VISIBLE);
+                    fab.setEnabled(false);
+
                     deviceCom.setup(ftDev, 0, false, false, 0);
                     deviceCom.start();
                 } else {
@@ -234,6 +243,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         fab.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.INVISIBLE);
+        prgConnect.setVisibility(View.INVISIBLE);
+        txtConnect.setVisibility(View.INVISIBLE);
         bvDisplay.setVisibility(View.VISIBLE);
 
         // check for type comapable
@@ -558,6 +570,9 @@ public class MainActivity extends AppCompatActivity {
                 openDevice();
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
                 closeDevice();
+                bvDisplay.setVisibility(View.INVISIBLE);
+                fab.setVisibility(View.VISIBLE);
+                fab.setEnabled(true);
             }
         }
     };

@@ -1,8 +1,5 @@
 package com.system.itl.ssp_bnv;
 
-import android.view.View;
-import android.widget.TextView;
-
 import com.ftdi.j2xx.FT_Device;
 
 import device.itl.sspcoms.BarCodeReader;
@@ -10,7 +7,6 @@ import device.itl.sspcoms.DeviceEvent;
 import device.itl.sspcoms.DeviceEventListener;
 import device.itl.sspcoms.DeviceFileUpdateListener;
 import device.itl.sspcoms.DeviceSetupListener;
-import device.itl.sspcoms.ItlCurrency;
 import device.itl.sspcoms.SSPComsConfig;
 import device.itl.sspcoms.SSPDevice;
 import device.itl.sspcoms.SSPSystem;
@@ -41,7 +37,6 @@ public class ITLDeviceCom extends Thread implements DeviceSetupListener, DeviceE
         ssp.setOnDeviceSetupListener(this);
         ssp.setOnEventUpdateListener(this);
         ssp.setOnDeviceFileUpdateListener(this);
-
 
     }
 
@@ -120,11 +115,7 @@ public class ITLDeviceCom extends Thread implements DeviceSetupListener, DeviceE
 
 
 
-    public void Stop()
-    {
-        ssp.Close();
-        isrunning = false;
-    }
+
 
 
     @Override
@@ -181,16 +172,21 @@ public class ITLDeviceCom extends Thread implements DeviceSetupListener, DeviceE
     }
 
 
-    public static boolean SetSSPDownload(final SSPUpdate update)
+    void Stop()
     {
+        ssp.Close();
+        isrunning = false;
+    }
 
+
+    boolean SetSSPDownload(final SSPUpdate update)
+    {
         return ssp.SetDownload(update);
 
     }
 
 
-
-    public void SetEscrowMode(boolean mode)
+    void SetEscrowMode(boolean mode)
     {
         if(ssp != null) {
             ssp.EscrowMode(mode);
@@ -198,7 +194,7 @@ public class ITLDeviceCom extends Thread implements DeviceSetupListener, DeviceE
 
     }
 
-    public void SetDeviceEnable(boolean en) {
+    void SetDeviceEnable(boolean en) {
         if (ssp != null) {
             if (en) {
                 ssp.EnableDevice();
@@ -207,7 +203,7 @@ public class ITLDeviceCom extends Thread implements DeviceSetupListener, DeviceE
             }
         }
     }
-    public void SetEscrowAction(SSPSystem.BillAction action)
+    void SetEscrowAction(SSPSystem.BillAction action)
     {
         if(ssp != null){
             ssp.SetBillEscrowAction(action);
@@ -215,7 +211,7 @@ public class ITLDeviceCom extends Thread implements DeviceSetupListener, DeviceE
     }
 
 
-    public void SetBarcocdeConfig(BarCodeReader cfg)
+    void SetBarcocdeConfig(BarCodeReader cfg)
     {
         if(ssp != null){
             ssp.SetBarCodeConfiguration(cfg);
@@ -223,7 +219,7 @@ public class ITLDeviceCom extends Thread implements DeviceSetupListener, DeviceE
     }
 
 
-    public int GetDeviceCode()
+    int GetDeviceCode()
     {
         if(ssp != null){
             return sspDevice.headerType.getValue();

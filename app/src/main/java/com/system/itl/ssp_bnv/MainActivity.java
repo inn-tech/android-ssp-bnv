@@ -515,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
 
                 sspUpdate.SetFileData();
                 ClearDisplay();
-                ITLDeviceCom.SetSSPDownload(sspUpdate);
+                deviceCom.SetSSPDownload(sspUpdate);
 
 
             } catch (IOException e) {
